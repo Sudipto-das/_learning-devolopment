@@ -1,36 +1,47 @@
-let[hours,minutes,seconds,milliseconds]=[0,0,0,0];
-let timeref=document.querySelector('.timerdisply');
-let my_int = null;
-
-function displayTimer(){
-    milliseconds+=10;
-
-    if(milliseconds == 1000){
-        milliseconds = 0;
-        seconds++;
-
-        if(seconds == 60){
-            seconds = 0;
-            minutes++;
-
-            if(minutes == 60){
-                minutes = 0;
-                hours++;
-            }
-        }
-    }
-
-let h = hours < 10 ? "0" + hours : hours;
-let m = minutes < 10 ? "0" + minutes : minutes;
-let s = seconds < 10 ? "0" + seconds : seconds;
-let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
-}
-
-timeref.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
-
-document.getElementById('_start').addEventListener('click', ()=>{
-    if(int!==null){
-        clearInterval(my_int);
-    }
-    my_int = setInterval(displayTimer,10);
+var seconds = 00;
+var miliseconds = 00;
+var show_seconds = document.getElementById('sec');
+var show_miliseconds = document.getElementById('milisec');
+// var btnstart = document.getElementById('_start');
+// var btnstop = document.getElementById('_stop');
+// var btnreset = document.getElementById('_reset');
+var interval;
+document.getElementById('_start').addEventListener('click', () => {
+    clearInterval(interval);
+    interval = setInterval(startTimer, 10);
 });
+document.getElementById('_stop').addEventListener('click', () => {
+    clearInterval(interval);
+});
+document.getElementById('_reset').addEventListener('click', () => {
+    clearInterval(interval);
+    seconds = "00";
+    miliseconds = "00";
+    show_miliseconds.innerHTML = miliseconds;
+    show_seconds.innerHTML = seconds;
+});
+
+function startTimer() {
+    miliseconds++;
+
+    if (miliseconds <= 9) {
+        show_miliseconds.innerHTML = "0" + miliseconds;
+    }
+
+    if (miliseconds > 9) {
+        show_miliseconds.innerHTML = miliseconds;
+    }
+
+    if (miliseconds > 99) {
+        console.log("seconds");
+        seconds++;
+        show_seconds.innerHTML = "0" + seconds;
+        miliseconds = 0;
+        show_miliseconds.innerHTML = "0" + 0;
+    }
+
+    if (seconds > 9) {
+        show_seconds.innerHTML = seconds;
+    }
+
+}
